@@ -18,7 +18,15 @@ end, { desc = "Toggle Snacks Terminal (Float)" })
 vim.keymap.del("n", "<leader>ft")
 vim.keymap.del("n", "<leader>fT")
 
+-- remap defults movement keys for graphite key layout
+vim.keymap.set("n", "j", "jzz", { noremap = true })
+vim.keymap.set("n", "k", "kzz", { noremap = true })
+vim.keymap.set("n", "<C-j>", "<C-d>zz", { noremap = true }) -- e.g., half-page down + center
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true }) -- e.g., half-page down + center
 -- Code
 -- Comments
 vim.keymap.set("n", "<leader>c/", "gcc", { remap = true, desc = "Toggle comment line (gcc)" })
 vim.keymap.set("v", "<leader>c/", "gc", { remap = true, desc = "Toggle comment (gc)" })
+vim.keymap.set("n", "<leader>cr", function()
+  require("metals").reveal_in_tree()
+end, { desc = "Reveal in tree" })
