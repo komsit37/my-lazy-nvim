@@ -1,10 +1,12 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-local wk = require("which-key")
 
--- Register terminal group with Nerd Font icon
-wk.add({ "<leader>t", group = "Terminal" })
+if not vim.g.vscode then
+  local wk = require("which-key")
+  -- Register terminal group with Nerd Font icon
+  wk.add({ "<leader>t", group = "Terminal" })
+end
 
 -- Terminal keymaps
 vim.keymap.set("n", "<leader>tt", function()
@@ -27,6 +29,9 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true }) -- e.g., half-page d
 -- Comments
 vim.keymap.set("n", "<leader>c/", "gcc", { remap = true, desc = "Toggle comment line (gcc)" })
 vim.keymap.set("v", "<leader>c/", "gc", { remap = true, desc = "Toggle comment (gc)" })
-vim.keymap.set("n", "<leader>cr", function()
-  require("metals").reveal_in_tree()
-end, { desc = "Reveal in tree" })
+
+if not vim.g.vscode then
+  vim.keymap.set("n", "<leader>cr", function()
+    require("metals").reveal_in_tree()
+  end, { desc = "Reveal in tree" })
+end

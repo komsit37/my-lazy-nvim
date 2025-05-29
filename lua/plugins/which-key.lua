@@ -1,4 +1,6 @@
-if true then
+if vim.g.vscode then
+  return {}
+else
   return {
     {
       "folke/which-key.nvim",
