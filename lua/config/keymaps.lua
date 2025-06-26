@@ -6,6 +6,17 @@ if not vim.g.vscode then
   local wk = require("which-key")
   -- Register terminal group with Nerd Font icon
   wk.add({ "<leader>t", group = "Terminal" })
+
+  -- Git which-key icons
+  wk.add({
+    { "<leader>gb", desc = "Git Branches", icon = { icon = "", color = "orange" } },
+    { "<leader>gs", desc = "Git Status", icon = { icon = "", color = "green" } },
+    { "<leader>gl", desc = "Git Log", icon = { icon = "󰜘", color = "yellow" } },
+    { "<leader>gf", desc = "Git Log File", icon = { icon = "󰋚", color = "yellow" } },
+    { "<leader>gi", desc = "Git Log Line", icon = { icon = "", color = "yellow" } },
+    { "<leader>gd", desc = "Git Diff (hunks)", icon = { icon = "", color = "red" } },
+    { "<leader>gS", desc = "Git Stash", icon = { icon = "", color = "yellow" } },
+  })
 end
 
 -- Terminal keymaps
@@ -35,3 +46,20 @@ if not vim.g.vscode then
     require("metals").reveal_in_tree()
   end, { desc = "Reveal in tree" })
 end
+
+-- Git keymaps (Snacks.nvim)
+vim.keymap.set("n", "<leader>gb", function()
+  Snacks.picker.git_branches()
+end)
+
+vim.keymap.set("n", "<leader>gl", function()
+  Snacks.picker.git_log()
+end)
+
+vim.keymap.set("n", "<leader>gf", function()
+  Snacks.picker.git_log_file()
+end)
+
+vim.keymap.set("n", "<leader>gi", function()
+  Snacks.picker.git_log_line()
+end)
