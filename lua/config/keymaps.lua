@@ -27,21 +27,11 @@ vim.keymap.set("n", "<C-j>", "<C-d>zz", { noremap = true }) -- e.g., half-page d
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true }) -- e.g., half-page down + center
 -- Code
 -- Comments
-vim.keymap.set(
-  "n",
-  "<leader>c/",
-  "gcc",
-  { remap = true, desc = "Toggle comment line (gcc)" }
-)
-vim.keymap.set(
-  "v",
-  "<leader>c/",
-  "gc",
-  { remap = true, desc = "Toggle comment (gc)" }
-)
+vim.keymap.set("n", "<leader>c/", "gcc", { remap = true, desc = "Toggle comment line (gcc)" })
+vim.keymap.set("v", "<leader>c/", "gc", { remap = true, desc = "Toggle comment (gc)" })
 
 if not vim.g.vscode then
-  vim.keymap.set("n", "<leader>cr", function()
+  vim.keymap.set("n", "<leader>ce", function()
     require("metals").reveal_in_tree()
   end, { desc = "Reveal in tree" })
 end
