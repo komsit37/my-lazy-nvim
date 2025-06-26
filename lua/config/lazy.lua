@@ -51,3 +51,6 @@ require("lazy").setup({
     },
   },
 })
+
+-- Load highlight overrides AFTER LazyVim setup
+require("config.highlights")
