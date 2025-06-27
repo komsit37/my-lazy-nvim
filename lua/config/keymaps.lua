@@ -6,6 +6,7 @@ if not vim.g.vscode then
   local wk = require("which-key")
   -- Register terminal group with Nerd Font icon
   wk.add({ "<leader>t", group = "Terminal" })
+  wk.add({ "<leader>h", group = "Buffer" })
 
   -- Git which-key icons
   wk.add({
@@ -16,6 +17,14 @@ if not vim.g.vscode then
     { "<leader>gi", desc = "Git Log Line", icon = { icon = "", color = "yellow" } },
     { "<leader>gd", desc = "Git Diff (hunks)", icon = { icon = "", color = "red" } },
     { "<leader>gS", desc = "Git Stash", icon = { icon = "", color = "yellow" } },
+    { "<leader>r", LazyVim.pick("oldfiles"), desc = "Recent" },
+    {
+      "<leader>R",
+      function()
+        Snacks.picker.recent({ filter = { cwd = true } })
+      end,
+      desc = "Recent (cwd)",
+    },
   })
 end
 
@@ -63,3 +72,24 @@ end)
 vim.keymap.set("n", "<leader>gi", function()
   Snacks.picker.git_log_line()
 end)
+
+-- buffer keymaps
+-- buffers
+-- vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+-- vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+-- vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+-- vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "<leader>hh", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+-- vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+vim.keymap.set("n", "<leader>hd", function()
+  Snacks.bufdelete()
+end, { desc = "Delete Buffer" })
+vim.keymap.set("n", "<leader>ho", function()
+  Snacks.bufdelete.other()
+end, { desc = "Delete Other Buffers" })
+vim.keymap.set("n", "<leader>hD", "<cmd>:bh<cr>", { desc = "Delete Buffer and Window" })
+
+vim.keymap.set("n", "<leader>hp", "<Cmd>BufferLineTogglePin<CR>", { desc = "Toggle Pin" })
+vim.keymap.set("n", "<leader>hP", "<Cmd>BufferLineGroupClose ungrouped<CR>", { desc = "Delete Non-Pinned Buffers" })
+vim.keymap.set("n", "<leader>hr", "<Cmd>BufferLineCloseRight<CR>", { desc = "Delete Buffers to the Right" })
+vim.keymap.set("n", "<leader>hl", "<Cmd>BufferLineCloseLeft<CR>", { desc = "Delete Buffers to the Left" })
