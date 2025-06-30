@@ -2,25 +2,26 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
--- fix clipboard hanging when usig wezterm with ssh
-vim.g.clipboard = {
-  name = "OSC 52",
-  copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-  },
-  paste = {
-    ["+"] = function()
-      return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
-    end,
-    ["*"] = function()
-      return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
-    end,
-  },
-}
+-- -- fix clipboard hanging when usig wezterm with ssh
+-- vim.g.clipboard = {
+--   name = "OSC 52",
+--   copy = {
+--     ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+--     ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+--   },
+--   paste = {
+--     ["+"] = function()
+--       return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+--     end,
+--     ["*"] = function()
+--       return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+--     end,
+--   },
+-- }
 
--- Remove or comment out this line to disable auto sync:
+-- do not copy to system clipboard, so I can use two clipboard
 -- vim.o.clipboard = "unnamedplus"
+vim.opt.clipboard = ""
 
 -- To yank to system clipboard explicitly, use the + register:
 --   "+yy   - yank current line to system clipboard
