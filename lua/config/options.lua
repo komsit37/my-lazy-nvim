@@ -40,17 +40,20 @@ local mode_sounds = {
   ["\22"] = "/System/Library/Sounds/Bottle.aiff", -- Visual Block (Ctrl+V)
   c = "/System/Library/Sounds/Ping.aiff", -- Command mode (:)
 }
-
-vim.api.nvim_create_autocmd("ModeChanged", {
-  pattern = "*",
-  callback = function(args)
-    local to_mode = args.match:sub(-1)
-    if to_mode ~= last_mode then
-      local sound = mode_sounds[to_mode]
-      if sound then
-        vim.fn.jobstart({ "afplay", sound }, { detach = true })
+local is_remote = os.getenv("SSH_CONNECTION") ~= nil or os.getenv("SSH_CLIENT") ~= nil
+local last_mode = vim.fn.mode()
+if not is_remote then
+  vim.api.nvim_create_autocmd("ModeChanged", {
+    pattern = "*",
+    callback = function(args)
+      local to_mode = args.match:sub(-1)
+      if to_mode ~= last_mode then
+        local sound = mode_sounds[to_mode]
+        if sound then
+          vim.fn.jobstart({ "afplay", sound }, { detach = true })
+        end
+        last_mode = to_mode
       end
-      last_mode = to_mode
-    end
-  end,
-})
+    end,
+  })
+end
