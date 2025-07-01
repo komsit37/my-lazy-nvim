@@ -31,6 +31,16 @@ vim.opt.clipboard = ""
 -- Neovim won't auto-sync yanks to system clipboard,
 -- so you must use "+ before yank commands to copy externally.
 
+-- auto chdir to opening dir
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    local file_dir = vim.fn.expand("%:p:h")
+    if vim.fn.isdirectory(file_dir) == 1 then
+      vim.cmd("lcd " .. file_dir)
+    end
+  end,
+})
+
 -- Define system sounds for each mode (macOS built-in)
 local mode_sounds = {
   n = "/System/Library/Sounds/Glass.aiff", -- Normal mode
