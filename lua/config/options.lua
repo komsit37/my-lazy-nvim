@@ -42,16 +42,20 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- Define system sounds for each mode (macOS built-in)
+-- osx old sound is snappier
 local mode_sounds = {
-  n = "/System/Library/Sounds/Glass.aiff", -- Normal mode
-  i = "/System/Library/Sounds/Hero.aiff", -- Insert mode
-  v = "/System/Library/Sounds/Bottle.aiff", -- Visual mode
-  V = "/System/Library/Sounds/Bottle.aiff", -- Visual Line
-  ["\22"] = "/System/Library/Sounds/Bottle.aiff", -- Visual Block (Ctrl+V)
+  n = "/System/Library/Sounds/Morse.aiff", -- Normal mode
+  i = "/Users/pkomsit/dotfiles/osx-old-sounds/Hero.aiff", -- Insert mode
+  v = "/System/Library/Sounds/Purr.aiff", -- Visual mode
+  V = "/System/Library/Sounds/Purr.aiff", -- Visual Line
+  ["\22"] = "/System/Library/Sounds/Purr.aiff", -- Visual Block (Ctrl+V)
   c = "/System/Library/Sounds/Ping.aiff", -- Command mode (:)
 }
 local is_remote = os.getenv("SSH_CONNECTION") ~= nil or os.getenv("SSH_CLIENT") ~= nil
 local last_mode = vim.fn.mode()
+-- throttle
+local last_play = 0
+local min_gap = 100 -- ms
 if not is_remote then
   vim.api.nvim_create_autocmd("ModeChanged", {
     pattern = "*",
@@ -60,7 +64,11 @@ if not is_remote then
       if to_mode ~= last_mode then
         local sound = mode_sounds[to_mode]
         if sound then
-          vim.fn.jobstart({ "afplay", sound }, { detach = true })
+          local now = vim.loop.now()
+          if now - last_play > min_gap then
+            vim.fn.jobstart({ "play", "-q", sound }, { detach = true })
+            last_play = now
+          end
         end
         last_mode = to_mode
       end
