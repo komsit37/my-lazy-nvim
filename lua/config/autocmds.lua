@@ -87,3 +87,20 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = rename_tmux_window_on_startup,
   desc = "Rename tmux window based on nvim arguments",
 })
+
+-- Function to restore tmux window name on exit
+local function restore_tmux_window_on_exit()
+  if not vim.env.TMUX then
+    return
+  end
+
+  -- Rename back to directory name
+  local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+  vim.fn.system("tmux rename-window " .. vim.fn.shellescape(dir_name))
+end
+
+-- Restore on nvim exit
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = restore_tmux_window_on_exit,
+  desc = "Restore tmux window name on nvim exit",
+})
