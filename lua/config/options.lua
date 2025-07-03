@@ -20,9 +20,6 @@
 -- }
 
 -- do not copy to system clipboard, so I can use two clipboard
--- vim.o.clipboard = "unnamedplus"
-vim.opt.clipboard = ""
-
 -- To yank to system clipboard explicitly, use the + register:
 --   "+yy   - yank current line to system clipboard
 --   "+y    - yank visual selection to system clipboard
@@ -31,47 +28,5 @@ vim.opt.clipboard = ""
 -- Neovim won't auto-sync yanks to system clipboard,
 -- so you must use "+ before yank commands to copy externally.
 
--- auto chdir to opening dir
-vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    local file_dir = vim.fn.expand("%:p:h")
-    if vim.fn.isdirectory(file_dir) == 1 then
-      vim.cmd("lcd " .. file_dir)
-    end
-  end,
-})
-
--- Define system sounds for each mode (macOS built-in)
--- osx old sound is snappier
-local mode_sounds = {
-  n = "/System/Library/Sounds/Morse.aiff", -- Normal mode
-  i = "/Users/pkomsit/dotfiles/osx-old-sounds/Hero.aiff", -- Insert mode
-  v = "/System/Library/Sounds/Purr.aiff", -- Visual mode
-  V = "/System/Library/Sounds/Purr.aiff", -- Visual Line
-  ["\22"] = "/System/Library/Sounds/Purr.aiff", -- Visual Block (Ctrl+V)
-  c = "/System/Library/Sounds/Ping.aiff", -- Command mode (:)
-}
-local is_remote = os.getenv("SSH_CONNECTION") ~= nil or os.getenv("SSH_CLIENT") ~= nil
-local last_mode = vim.fn.mode()
--- throttle
-local last_play = 0
-local min_gap = 100 -- ms
-if not is_remote then
-  vim.api.nvim_create_autocmd("ModeChanged", {
-    pattern = "*",
-    callback = function(args)
-      local to_mode = args.match:sub(-1)
-      if to_mode ~= last_mode then
-        local sound = mode_sounds[to_mode]
-        if sound then
-          local now = vim.loop.now()
-          if now - last_play > min_gap then
-            vim.fn.jobstart({ "play", "-q", sound }, { detach = true })
-            last_play = now
-          end
-        end
-        last_mode = to_mode
-      end
-    end,
-  })
-end
+-- vim.o.clipboard = "unnamedplus"
+vim.opt.clipboard = ""

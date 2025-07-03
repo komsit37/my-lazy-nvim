@@ -49,6 +49,9 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true }) -- e.g., half-page d
 -- Comments
 vim.keymap.set("n", "<leader>c/", "gcc", { remap = true, desc = "Toggle comment line (gcc)" })
 vim.keymap.set("v", "<leader>c/", "gc", { remap = true, desc = "Toggle comment (gc)" })
+-- Yank to system clipboard
+vim.keymap.set("v", "<leader>y", '"+y', { desc = 'Yank to system clipboard "+y' })
+vim.keymap.set("v", "<leader>p", '"+p', { desc = 'Paste from system clipboard "+p' })
 
 if not vim.g.vscode then
   vim.keymap.set("n", "<leader>ce", function()
