@@ -58,27 +58,23 @@ local function rename_tmux_window_on_startup()
     return
   end
 
-  local name
   local args = vim.fn.argv()
+  local name
 
   if #args > 0 then
-    -- Use first argument (file/dir passed to nvim)
     local arg = args[1]
     if vim.fn.isdirectory(arg) == 1 then
-      -- Directory argument
-      name = vim.fn.fnamemodify(arg, ":t")
+      local dir_path = arg == "." and vim.fn.getcwd() or arg
+      name = vim.fn.fnamemodify(dir_path, ":t")
     else
-      -- File argument - use filename without extension
       name = vim.fn.fnamemodify(arg, ":t:r")
     end
   else
-    -- No arguments, use current directory name
     name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
   end
 
   if name ~= "" then
-    name = "v:" .. name
-    vim.fn.system("tmux rename-window " .. vim.fn.shellescape(name))
+    vim.fn.system("tmux rename-window " .. vim.fn.shellescape("v:" .. name))
   end
 end
 
