@@ -6,16 +6,6 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
---
--- auto chdir to opening dir
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    local file_dir = vim.fn.expand("%:p:h")
-    if vim.fn.isdirectory(file_dir) == 1 then
-      vim.cmd("lcd " .. file_dir)
-    end
-  end,
-})
 
 -- Define system sounds for each mode (macOS built-in)
 -- osx old sound is snappier
@@ -51,6 +41,18 @@ if not is_remote then
     end,
   })
 end
+
+---------------------------------------------------
+-- auto chdir to opening dir
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    local arg = vim.fn.argv(0)
+    if arg ~= "" and vim.fn.isdirectory(arg) == 1 then
+      vim.cmd("cd " .. arg)
+    end
+  end,
+  desc = "CD into directory if nvim launched with one",
+})
 
 -- Function to rename tmux window based on nvim arguments
 local function rename_tmux_window_on_startup()
