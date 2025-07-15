@@ -21,6 +21,25 @@ if not vim.g.vscode then
       desc = "Recent (cwd)",
     },
   })
+
+  local bufferline = require("bufferline")
+  for i = 1, 9 do
+    wk.add({
+      "<leader>" .. i,
+      function()
+        bufferline.go_to(i, true)
+      end,
+      -- omit desc so it won't show up in which-key
+    })
+  end
+
+  vim.keymap.set("n", "<leader>bH", function()
+    bufferline.go_to(1, true)
+  end, { desc = "Go to first buffer" })
+
+  vim.keymap.set("n", "<leader>bL", function()
+    bufferline.go_to(-1, true)
+  end, { desc = "Go to last buffer" })
 end
 
 -- remap defults movement keys for graphite key layout
