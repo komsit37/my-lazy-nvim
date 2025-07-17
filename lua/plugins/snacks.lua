@@ -2,55 +2,41 @@ return {
   "folke/snacks.nvim",
   opts = {
     picker = {
+      layout = {
+        preset = function()
+          return "ivy_split"
+        end,
+      },
+      -- layouts = {
+      --   default = { layout = { width = 0.9 } },
+      --   vertical = { layout = { width = 0.9 } },
+      -- },
       sources = {
         grep = {
-          layout = {
-            layout = {
-              width = 0.95,
-              height = 0.8,
-            },
-          },
+          -- {
+          --   layout = {
+          --     box = "vertical",
+          --     backdrop = false,
+          --     row = -1,
+          --     width = 0,
+          --     height = 0.4,
+          --     border = "top",
+          --     title = " {title} {live} {flags}",
+          --     title_pos = "left",
+          --     { win = "input", height = 1, border = "bottom" },
+          --     {
+          --       box = "horizontal",
+          --       { win = "list", border = "none" },
+          --       { win = "preview", title = "{preview}", width = 0.6, border = "left" },
+          --     },
+          --   },
+          -- },
         },
-        files = {
-          layout = {
-            layout = {
-              width = 0.95,
-              height = 0.8,
-            },
-          },
-        },
-        git_status = {
-          layout = {
-            layout = {
-              width = 0.95,
-              height = 0.8,
-            },
-          },
-        },
-        git_diff = {
-          layout = {
-            layout = {
-              width = 0.95,
-              height = 0.8,
-            },
-          },
-        },
-        git_log = {
-          layout = {
-            layout = {
-              width = 0.95,
-              height = 0.8,
-            },
-          },
-        },
-        git_log_file = {
-          layout = {
-            layout = {
-              width = 0.95,
-              height = 0.8,
-            },
-          },
-        },
+        files = {},
+        git_status = {},
+        git_diff = {},
+        git_log = {},
+        git_log_file = {},
       },
     },
   },
