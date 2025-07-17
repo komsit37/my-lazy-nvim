@@ -2,7 +2,9 @@ return {
   "akinsho/bufferline.nvim",
   opts = {
     options = {
-      numbers = "ordinal",
+      numbers = function(opts)
+        return string.format("[%d]", opts.ordinal)
+      end,
     },
   },
 }
