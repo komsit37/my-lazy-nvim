@@ -30,3 +30,6 @@
 
 -- vim.o.clipboard = "unnamedplus"
 vim.opt.clipboard = ""
+
+-- do not show / in diff delete lines
+vim.opt.fillchars = "diff: "
