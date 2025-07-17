@@ -35,6 +35,22 @@ return {
             },
           },
         },
+        git_log = {
+          layout = {
+            layout = {
+              width = 0.95,
+              height = 0.8,
+            },
+          },
+        },
+        git_log_file = {
+          layout = {
+            layout = {
+              width = 0.95,
+              height = 0.8,
+            },
+          },
+        },
       },
     },
   },

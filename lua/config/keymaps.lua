@@ -5,14 +5,24 @@ if not vim.g.vscode then
 
   -- Git which-key icons
   wk.add({
-    { "<leader>gb", desc = "Git Branches", icon = { icon = "", color = "orange" } },
-    { "<leader>gs", desc = "Git Status", icon = { icon = "", color = "green" } },
-    { "<leader>gu", desc = "Git Log", icon = { icon = "󰜘", color = "yellow" } },
-    { "<leader>go", desc = "Git Log File", icon = { icon = "󰋚", color = "yellow" } },
-    { "<leader>gi", desc = "Git Log Line", icon = { icon = "", color = "yellow" } },
-    { "<leader>gd", desc = "Git Diff (hunks)", icon = { icon = "", color = "red" } },
-    { "<leader>gS", desc = "Git Stash", icon = { icon = "", color = "yellow" } },
-    { "<leader>r", LazyVim.pick("oldfiles"), desc = "Recent" },
+    { "<leader>gb", desc = "Branches", icon = { icon = "", color = "orange" } },
+    { "<leader>gB", desc = "Browse", icon = { icon = "", color = "grey" } },
+    { "<leader>gc", desc = "Commit", icon = { icon = "", color = "green" } },
+    { "<leader>gC", desc = "Commit (amend)", icon = { icon = "", color = "green" } },
+    { "<leader>gs", desc = "Status", icon = { icon = "", color = "green" } },
+    { "<leader>gu", desc = "Log (quick)", icon = { icon = "󰜘", color = "yellow" } },
+    { "<leader>go", desc = "Log File (quick)", icon = { icon = "󰋚", color = "yellow" } },
+    { "<leader>gi", desc = "Log Line", icon = { icon = "", color = "yellow" } },
+    { "<leader>gd", desc = "Diff (hunks)", icon = { icon = "", color = "red" } },
+    { "<leader>gS", desc = "Stash", icon = { icon = "", color = "yellow" } },
+    --diffview
+    { "<leader>gv", desc = "Diffview", icon = { icon = "", color = "red" } },
+    { "<leader>gV", desc = "Diffview (branch)", icon = { icon = "", color = "red" } },
+    { "<leader>gU", desc = "Log", icon = { icon = "󰜘", color = "red" } },
+    { "<leader>gO", desc = "Log File", icon = { icon = "󰋚", color = "red" } },
+    { "<leader>gx", desc = "Close diffview", icon = { icon = "", color = "grey" } },
+    --file navigation
+    { "<leader>r", LazyVim.pick("oldfiles"), desc = "Recent", icon = { icon = "󰈙", color = "blue" } },
     {
       "<leader>R",
       function()
@@ -42,6 +52,13 @@ if not vim.g.vscode then
     bufferline.go_to(-1, true)
   end, { desc = "Go to last buffer" })
 end
+
+vim.keymap.set("n", "<leader>go", function()
+  Snacks.picker.git_log_file()
+end)
+vim.keymap.set("n", "<leader>gu", function()
+  Snacks.picker.git_log()
+end)
 
 -- add centering on vertical movements for smooth scrolling
 vim.keymap.set("n", "j", "jzz", { noremap = true })
