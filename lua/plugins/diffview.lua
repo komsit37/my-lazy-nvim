@@ -29,16 +29,14 @@ end
 -- Git commit utility function
 local function git_commit()
   -- Show file list before prompting
-  -- vim.notify(get_git_status_list(), "info", {
-  --   id = 1,
-  --   title = "Git Status",
-  --   timeout = 0,
-  -- })
   local top_padding = "\n\n\n\n"
   local win = Snacks.win({ text = top_padding .. get_git_status_list(), width = 0.6, hdeight = 0.6, border = "hpad" })
 
   require("snacks").input({
     prompt = "git commit -m ",
+    on_cancel = function()
+      win:close()
+    end,
   }, function(msg)
     -- Close the status notifier when input finishes
     -- require("snacks").notifier.hide(1)
@@ -66,9 +64,19 @@ local function git_commit_amend()
   local top_padding = "\n\n\n\n"
   local win = Snacks.win({ text = top_padding .. get_git_status_list(), width = 0.6, hdeight = 0.6, border = "hpad" })
 
-  require("snacks").input({ prompt = "Amend message (leave empty to reuse): " }, function(msg)
+  Snacks.input({
+    prompt = "Amend message (leave empty to reuse): ",
+    on_cancel = function()
+      win:close()
+    end,
+  }, function(msg)
     -- Close the status window when input finishes
     win:close()
+
+    if msg == nil then
+      return
+    end
+
     local cmd = { "git", "commit", "--amend" }
     if msg and msg ~= "" then
       table.insert(cmd, "-m")
