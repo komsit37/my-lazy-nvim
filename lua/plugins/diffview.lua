@@ -8,12 +8,10 @@ return {
     "DiffviewFileHistory",
   },
   keys = {
-    { "<leader>gv", group = "Git Diffview" },
-
-    { "<leader>gvd", "<cmd>DiffviewOpen<cr>", desc = "Open Diff View" },
+    { "<leader>gv", "<cmd>DiffviewOpen<cr>", desc = "Open Diff View" },
 
     {
-      "<leader>gvD",
+      "<leader>gV",
       function()
         require("snacks.picker").git_branches({
           prompt = "Select branch to diff with",
@@ -26,9 +24,9 @@ return {
       desc = "Diff with Branch",
     },
 
-    { "<leader>gvh", "<cmd>DiffviewFileHistory %<cr>", desc = "File History (Current File)" },
-    { "<leader>gvH", "<cmd>DiffviewFileHistory<cr>", desc = "File History (Current Branch)" },
-    { "<leader>gvx", "<cmd>DiffviewClose<cr>", desc = "Close Diff View" },
+    { "<leader>go", "<cmd>DiffviewFileHistory %<cr>", desc = "File History (Current File)" },
+    { "<leader>gu", "<cmd>DiffviewFileHistory<cr>", desc = "File History (Current Branch)" },
+    { "<leader>gx", "<cmd>DiffviewClose<cr>", desc = "Close Diff View" },
   },
   config = function()
     require("diffview").setup({

@@ -7,8 +7,8 @@ if not vim.g.vscode then
   wk.add({
     { "<leader>gb", desc = "Git Branches", icon = { icon = "", color = "orange" } },
     { "<leader>gs", desc = "Git Status", icon = { icon = "", color = "green" } },
-    { "<leader>gl", desc = "Git Log", icon = { icon = "󰜘", color = "yellow" } },
-    { "<leader>gf", desc = "Git Log File", icon = { icon = "󰋚", color = "yellow" } },
+    { "<leader>gu", desc = "Git Log", icon = { icon = "󰜘", color = "yellow" } },
+    { "<leader>go", desc = "Git Log File", icon = { icon = "󰋚", color = "yellow" } },
     { "<leader>gi", desc = "Git Log Line", icon = { icon = "", color = "yellow" } },
     { "<leader>gd", desc = "Git Diff (hunks)", icon = { icon = "", color = "red" } },
     { "<leader>gS", desc = "Git Stash", icon = { icon = "", color = "yellow" } },
@@ -22,6 +22,7 @@ if not vim.g.vscode then
     },
   })
 
+  -- jump to buffer by number
   local bufferline = require("bufferline")
   for i = 1, 9 do
     wk.add({
@@ -42,15 +43,14 @@ if not vim.g.vscode then
   end, { desc = "Go to last buffer" })
 end
 
--- remap defults movement keys for graphite key layout
+-- add centering on vertical movements for smooth scrolling
 vim.keymap.set("n", "j", "jzz", { noremap = true })
 vim.keymap.set("n", "k", "kzz", { noremap = true })
+vim.keymap.set("n", "{", "{zz", { noremap = true })
+vim.keymap.set("n", "}", "}zz", { noremap = true })
 vim.keymap.set("n", "<C-j>", "<C-d>zz", { noremap = true }) -- e.g., half-page down + center
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true }) -- e.g., half-page down + center
 -- Code
--- Comments
-vim.keymap.set("n", "<leader>c/", "gcc", { remap = true, desc = "Toggle comment line (gcc)" })
-vim.keymap.set("v", "<leader>c/", "gc", { remap = true, desc = "Toggle comment (gc)" })
 -- Yank to system clipboard
 vim.keymap.set("v", "<leader>y", '"+y', { desc = 'Yank to system clipboard "+y' })
 vim.keymap.set("v", "<leader>p", '"+p', { desc = 'Paste from system clipboard "+p' })
@@ -64,14 +64,6 @@ end
 -- Git keymaps (Snacks.nvim)
 vim.keymap.set("n", "<leader>gb", function()
   Snacks.picker.git_branches()
-end)
-
-vim.keymap.set("n", "<leader>gl", function()
-  Snacks.picker.git_log()
-end)
-
-vim.keymap.set("n", "<leader>gf", function()
-  Snacks.picker.git_log_file()
 end)
 
 vim.keymap.set("n", "<leader>gi", function()
