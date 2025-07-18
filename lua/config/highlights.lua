@@ -8,9 +8,12 @@ end
 -- set diff highlights
 local function set_diff_highlights()
   -- print("Setting diff highlights...")
-  vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#ffffff", bg = "#7f2b37" })
-  vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#ffffff", bg = "#295c2b" })
-  vim.api.nvim_set_hl(0, "DiffChange", { fg = "#ffffff", bg = "#4a3f2c" })
+  -- vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#ffffff", bg = "#7f2b37" })
+  -- vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#ffffff", bg = "#295c2b" })
+  -- vim.api.nvim_set_hl(0, "DiffChange", { fg = "#ffffff", bg = "#4a3f2c" })
+  vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#223a2b" })
+  vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4a2a2f" })
+  vim.api.nvim_set_hl(0, "DiffChange", { bg = "#332e26" })
   -- print("Diff highlights set")
 end
 
