@@ -2,6 +2,16 @@ return {
   "folke/snacks.nvim",
   opts = {
     picker = {
+      previewers = {
+        diff = {
+          builtin = false, -- use Neovim for previewing diffs (true) or use an external tool (false)
+          cmd = { "delta" }, -- example to show a diff with delta
+        },
+        git = {
+          builtin = false, -- use Neovim for previewing git output (true) or use git (false)
+          args = {}, -- additional arguments passed to the git command. Useful to set pager options usin `-c ...`
+        },
+      },
       layout = {
         preset = function()
           return "ivy_split"
