@@ -7,10 +7,11 @@ return {
           return "ivy_split"
         end,
       },
-      -- layouts = {
-      --   default = { layout = { width = 0.9 } },
-      --   vertical = { layout = { width = 0.9 } },
-      -- },
+      layouts = {
+        --   default = { layout = { width = 0.9 } },
+        --   vertical = { layout = { width = 0.9 } },
+        ivy_split = { layout = { height = 0.2 } },
+      },
       sources = {
         grep = {
           -- {
@@ -37,6 +38,9 @@ return {
         git_diff = {},
         git_log = {},
         git_log_file = {},
+        explorer = {
+          layout = { layout = { position = "right" } },
+        },
       },
     },
   },
