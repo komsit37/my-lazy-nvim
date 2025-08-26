@@ -3,9 +3,6 @@ return {
   {
     "nvim-lua/plenary.nvim", -- dummy dependency
     keys = {
-      -- Keep which-key group
-      -- { "<leader>y", desc = "+yank", mode = { "n", "v" } },
-
       -- Copy file:line:col + context
       {
         "<leader>cy",
