@@ -49,9 +49,27 @@ return {
         git_log = {},
         git_log_file = {},
         explorer = {
-          layout = { layout = { position = "right" } },
+          layout = { layout = { position = "left" } },
         },
       },
+    },
+  },
+  keys = {
+    {
+      "<leader>ch",
+      function()
+        require("enhanced-lsp-refs").enhanced_references()
+      end,
+      desc = "Enhanced LSP References",
+      mode = "n",
+    },
+    {
+      "<leader>cH",
+      function()
+        require("enhanced-lsp-refs").grep_references()
+      end,
+      desc = "Grep-style LSP References",
+      mode = "n",
     },
   },
 }
