@@ -5,7 +5,9 @@ return {
       previewers = {
         diff = {
           builtin = false, -- use Neovim for previewing diffs (true) or use an external tool (false)
-          cmd = { "delta" }, -- example to show a diff with delta
+          -- cmd = { "delta" }, -- example to show a diff with delta
+          -- temp fix for delta not showing correct width. somehow no issue with git command
+          cmd = { "delta", "--side-by-side", "--width=140" },
         },
         git = {
           builtin = false, -- use Neovim for previewing git output (true) or use git (false)
