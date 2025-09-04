@@ -102,3 +102,14 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
   callback = restore_tmux_window_on_exit,
   desc = "Restore tmux window name on nvim exit",
 })
+
+-- Go file specific settings
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  callback = function()
+    vim.opt_local.expandtab = false -- use tabs, not spaces
+    vim.opt_local.tabstop = 4 -- show a tab as 4 spaces
+    vim.opt_local.shiftwidth = 4 -- indent/outdent by 4
+    vim.opt_local.softtabstop = 4 -- tab feels like 4 spaces
+  end,
+})
