@@ -61,13 +61,22 @@ vim.keymap.set("n", "<leader>gu", function()
 end)
 
 -- add centering on vertical movements for smooth scrolling
-vim.keymap.set("n", "j", "jzz", { noremap = true })
-vim.keymap.set("n", "k", "kzz", { noremap = true })
-vim.keymap.set("n", "{", "{zz", { noremap = true })
-vim.keymap.set("n", "}", "}zz", { noremap = true })
-vim.keymap.set("n", "<C-j>", "<C-d>zz", { noremap = true }) -- e.g., half-page down + center
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true }) -- e.g., half-page down + center
+local opts = { noremap = true, silent = true }
+
+-- add centering on vertical movements for smooth scrolling
+vim.keymap.set("n", "j", "jzz", opts)
+vim.keymap.set("n", "k", "kzz", opts)
+vim.keymap.set("n", "{", "{zz", opts)
+vim.keymap.set("n", "}", "}zz", opts)
+vim.keymap.set("n", "<C-j>", "<C-d>zz", opts) -- half-page down + center
+vim.keymap.set("n", "<C-u>", "<C-u>zz", opts) -- half-page up + center
+
 -- Code
+
+-- Don't let small deletes overwrite your last yank
+vim.keymap.set("n", "x", '"_x', opts) -- delete char (no yank)
+vim.keymap.set("n", "X", '"_X', opts) -- delete backward char (no yank)
+
 -- Yank to system clipboard
 vim.keymap.set("v", "<leader>y", '"+y', { desc = 'Yank to system clipboard "+y' })
 vim.keymap.set("v", "<leader>p", '"+p', { desc = 'Paste from system clipboard "+p' })
@@ -86,6 +95,48 @@ end)
 vim.keymap.set("n", "<leader>gi", function()
   Snacks.picker.git_log_line()
 end)
+
+-- copy location to system clipboard (for llm)
+-- Copy file:line:col + context (selected text or word under cursor)
+local function copy_location_with_context()
+  local filepath = vim.fn.expand("%:p")
+  local line = vim.fn.line(".")
+  local col = vim.fn.col(".")
+
+  -- Try git root first
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+  if vim.v.shell_error == 0 and git_root and git_root ~= "" then
+    filepath = filepath:gsub("^" .. vim.pesc(git_root .. "/"), "")
+  else
+    -- fallback to relative to cwd
+    filepath = vim.fn.fnamemodify(filepath, ":.")
+  end
+
+  -- Detect visual selection
+  local mode = vim.fn.mode()
+  local context = ""
+  if mode:match("[vV]") then
+    -- Get visual selection
+    local _, ls, cs = unpack(vim.fn.getpos("'<"))
+    local _, le, ce = unpack(vim.fn.getpos("'>"))
+    local lines = vim.fn.getline(ls, le)
+    if #lines > 0 then
+      lines[#lines] = string.sub(lines[#lines], 1, ce)
+      lines[1] = string.sub(lines[1], cs)
+      context = table.concat(lines, "\n")
+    end
+  else
+    -- fallback: word under cursor
+    context = vim.fn.expand("<cword>")
+  end
+
+  local result = string.format("%s:%d:%d %s", filepath, line, col, context)
+  vim.fn.setreg("+", result) -- copy to system clipboard
+  print("Copied: " .. result)
+end
+
+-- Map in normal and visual mode
+vim.keymap.set({ "n", "v" }, "<leader>yc", copy_location_with_context, { desc = "Copy file:line:col + context" })
 
 -- buffer keymaps
 -- buffers
