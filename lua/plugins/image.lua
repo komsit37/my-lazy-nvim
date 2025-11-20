@@ -9,8 +9,8 @@ return {
     integrations = {
       markdown = { enabled = true, clear_in_insert_mode = true },
       neorg = { enabled = true },
-      cmp = false,
-      telescope = false,
+      cmp = { enabled = false },
+      telescope = { enabled = false },
     },
     -- scaling/limits (tweak to taste)
     max_width = 60,
