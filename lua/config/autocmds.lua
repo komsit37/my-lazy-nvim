@@ -113,3 +113,8 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.softtabstop = 4 -- tab feels like 4 spaces
   end,
 })
+
+-- Short alias for MarkdownPreview command
+vim.api.nvim_create_user_command("Mdp", function()
+  vim.cmd("MarkdownPreview")
+end, { desc = "Alias for MarkdownPreview" })
