@@ -136,7 +136,7 @@ local function copy_location_with_context()
 end
 
 -- Map in normal and visual mode
-vim.keymap.set({ "n", "v" }, "<leader>yc", copy_location_with_context, { desc = "Copy file:line:col + context" })
+vim.keymap.set({ "n" }, "<leader>yc", copy_location_with_context, { desc = "Copy file:line:col + context" })
 
 -- buffer keymaps
 -- buffers
